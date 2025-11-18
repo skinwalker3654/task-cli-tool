@@ -5,9 +5,9 @@
 
 int main(int argc,char **argv) {
     /* Thats because there are commands
-     * with only 2, 3 or 4 arguements passed*/
+     * with only 2, 3 or 4 arguments passed*/
     if(argc != 2 && argc != 3 && argc != 4) {
-        printf("[ERR] Invalid arguements passed\n");
+        printf("[ERR] Invalid arguments passed\n");
         printf("[INFO] Type: './task help' for more details\n");
     }
 
@@ -18,7 +18,7 @@ int main(int argc,char **argv) {
 
     load_tasks_from_file(&tasks);
 
-    /*These are all the commands with 1 arguements passing the 2nd is the ./fileName*/
+    /*These are all the commands with 1 arguments passing the 2nd is the ./fileName*/
     if(argc == 2) {
         if(strcmp(argv[1],"list")==0) {
             print_list_of_tasks(&tasks,EVERY_STATU);
@@ -36,7 +36,7 @@ int main(int argc,char **argv) {
         }
     }
 
-    /*There are all the commands with 2 arguements passed the 3rd is the ./fileName*/
+    /*There are all the commands with 2 arguments passed the 3rd is the ./fileName*/
     if(argc == 3) {
         if(strcmp(argv[1],"list")==0) {
             if(strcmp(argv[2],"done")==0) {
@@ -49,7 +49,7 @@ int main(int argc,char **argv) {
                 print_list_of_tasks(&tasks,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid statu '%s'\n",argv[2]);
+                printf("[ERR] Invalid status '%s'\n",argv[2]);
                 printf("[INFO] Type: './task help' for more details\n");
                 goto exit_label;
             }
@@ -67,7 +67,7 @@ int main(int argc,char **argv) {
                 clear_tasks_by_statu(&tasks,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid statu '%s'\n",argv[2]);
+                printf("[ERR] Invalid status '%s'\n",argv[2]);
                 printf("[INFO] Type: './task help' for more details\n");
             }
         } else if(strcmp(argv[1],"remove")==0) {
