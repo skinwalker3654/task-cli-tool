@@ -59,7 +59,7 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
 
     /*ID's are just numbers from 1 to INF so bc the task counter starts from zero we just add 1*/
     listPtr->tasks[listPtr->counter].taskId = listPtr->counter+1;
-    listPtr->tasks[listPtr->counter].TaskStatu = TODO; //Default task statu
+    listPtr->tasks[listPtr->counter].TaskStatu = TODO; //Default task status
     listPtr->counter++;
 
     /*Becauses we encresed the counter size before we now saying -1 to see the current task that added*/
@@ -111,8 +111,8 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
         return;
     }
 
-    /* So this function gets a specific statu and 
-     * then it prints every task with that statu
+    /* So this function gets a specific status and 
+     * then it prints every task with that status
      * except in the case of the EVERY_STATU that
      * prints all the tasks*/
     if(givenStatu == TODO) {
@@ -157,7 +157,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
             printf(" %s\n",listPtr->tasks[i].taskName);
         }
     } else {
-        printf("[ERR] You passed an invalid statu format in the function \"print_list_of_tasks\"\n");
+        printf("[ERR] You passed an invalid status format in the function \"print_list_of_tasks\"\n");
         return;
     }
 }
@@ -233,9 +233,9 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
     free(task_before_rename);
 }
 
-void clear_tasks_by_statu(TaskList *listPtr,TaskStatus givenStatu) {
+void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
     /* This function clears every task with 
-     * the given statu by using the sifting method*/
+     * the given status by using the sifting method*/
     if(givenStatu == DOING) { //DOING_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].TaskStatu == DOING) {
@@ -271,7 +271,7 @@ void clear_tasks_by_statu(TaskList *listPtr,TaskStatus givenStatu) {
         }
     }
 
-    printf("[OK] Tasks with the given statu have been cleared succesfully\n");
+    printf("[OK] Tasks with the given status have been cleared succesfully\n");
 }
 
 void reset_task_list(TaskList *listPtr) {
@@ -291,9 +291,9 @@ void reset_task_list(TaskList *listPtr) {
 
 void save_tasks_to_file(TaskList *listPtr) {
     /* We save the tasks into a file with the name .tasksdb
-     * with the format id|statu|task name so we can load the data
+     * with the format id|status|task name so we can load the data
      * every time we run the program so it nevers losts any tasks
-     * except if you delete the file, NOTE in the statu we are using numbers
+     * except if you delete the file, NOTE in the status we are using numbers
      * for the parsing to make the job esier so 1 = TODO_STAT, 2 = DOING_STATU
      * and 3 is for DONE_STATU*/
     FILE *file = fopen(".tasksdb","w");
@@ -347,7 +347,7 @@ void load_tasks_from_file(TaskList *listPtr) {
                 return;
             }
 
-            /* After we parse the statu value we check what statu to add
+            /* After we parse the status value we check what status to add
              * specifically, the values are explained in the save_tasks_to_file function*/
             listPtr->tasks[listPtr->counter].taskId = taskId;
             if(whatStatue == 1) {
@@ -395,10 +395,10 @@ void help_show_commands() {
     printf("  ./task add \"taskName\"            - add tasks to the list\n");
     printf("  ./task remove <id>               - remove tasks from the list\n");
     printf("  ./task list                      - print all the tasks from the list\n");
-    printf("  ./task list <status>              - print all the tasks with the same statu\n");
-    printf("  ./task set-status <id> <statu>   - change the statu from a task\n");
+    printf("  ./task list <status>              - print all the tasks with the same status\n");
+    printf("  ./task set-status <id> <status>   - change the status from a task\n");
     printf("  ./task rename <id> \"newTaskName\" - change the name from a task\n");
-    printf("  ./task clear <status>              - delete every task with the same statu\n");
+    printf("  ./task clear <status>              - delete every task with the same status\n");
     printf("  ./task reset                      - deletes every task\n\n");
     printf("Available status:\n");
     printf("   todo    -   are the tasks that added and havent executed yet\n");

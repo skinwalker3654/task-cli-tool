@@ -7,8 +7,8 @@ typedef enum {
     TODO,
     DOING,
     DONE, 
-    EVERY_STATU, /*This is used when we want to print all the list with every statu
-                  *bc in the print_list_of_tasks function you say what statu you want to print specifically*/
+    EVERY_STATU, /*This is used when we want to print all the list with every status
+                  *bc in the print_list_of_tasks function you say what status you want to print specifically*/
 } TaskStatus;
 
 typedef struct Task_t {
@@ -38,6 +38,6 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId);
 void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu);
 void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatu);
 void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName);
-void clear_tasks_by_statu(TaskList *listPtr,TaskStatus givenStatu);
+void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu);
 
 #endif

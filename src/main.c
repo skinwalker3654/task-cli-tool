@@ -58,13 +58,13 @@ int main(int argc,char **argv) {
             goto exit_label;
         } else if(strcmp(argv[1],"clear")==0) {
             if(strcmp(argv[2],"done")==0) {
-                clear_tasks_by_statu(&tasks,DONE);
+                clear_tasks_by_status(&tasks,DONE);
                 goto exit_label;
             } else if(strcmp(argv[2],"todo")==0) {
-                clear_tasks_by_statu(&tasks,TODO);
+                clear_tasks_by_status(&tasks,TODO);
                 goto exit_label;
             } else if(strcmp(argv[2],"doing")==0) {
-                clear_tasks_by_statu(&tasks,DOING);
+                clear_tasks_by_status(&tasks,DOING);
                 goto exit_label;
             } else {
                 printf("[ERR] Invalid status '%s'\n",argv[2]);
@@ -109,7 +109,7 @@ int main(int argc,char **argv) {
                 change_task_status_by_id(&tasks,idNumber,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid statu '%s'\n",argv[3]);
+                printf("[ERR] Invalid status '%s'\n",argv[3]);
                 printf("[INFO] Type: './task help' for more details\n");
                 goto exit_label;
             }
