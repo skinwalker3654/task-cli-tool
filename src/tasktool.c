@@ -92,6 +92,11 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
     /* We keep the name of the task we are going to delete bc
      * we are going to use it on the message at the end*/
     char *deleted_task_name = strdup(listPtr->tasks[foundTaskIndex].taskName);
+    if(deleted_task_name == NULL) {
+        printf("[ERR] Failed to allocate memory for the task name before we delete it\n");
+        return;
+    }
+
     free(listPtr->tasks[foundTaskIndex].taskName);
 
     /*Shifting method for deletion*/
@@ -226,6 +231,11 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
     /* We keep the name of the task before the renaming so we can use
      * it on the message at the end*/
     char *task_before_rename = strdup(listPtr->tasks[foundTaskIndex].taskName);
+    if(task_before_rename == NULL) {
+        printf("[ERR] Failed to allocate memory for the task name before we rename it\n");
+        return;
+    }
+
     free(listPtr->tasks[foundTaskIndex].taskName);
     listPtr->tasks[foundTaskIndex].taskName = strdup(givenTaskName);
 
