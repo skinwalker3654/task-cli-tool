@@ -162,7 +162,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
     }
 }
 
-void change_task_statu_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatu) {
+void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatu) {
     if(listPtr->counter == 0) {
         printf("[ERR] The task list is empty, there are no tasks to change yet\n");
         return;
@@ -229,7 +229,7 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
     free(listPtr->tasks[foundTaskIndex].taskName);
     listPtr->tasks[foundTaskIndex].taskName = strdup(givenTaskName);
 
-    printf("[OK] Task '%s' has renamed to %s succesfully\n",task_before_rename,givenTaskName);
+    printf("[OK] Task '%s' has renamed to '%s' succesfully\n",task_before_rename,givenTaskName);
     free(task_before_rename);
 }
 
@@ -395,13 +395,13 @@ void help_show_commands() {
     printf("  ./task add \"taskName\"            - add tasks to the list\n");
     printf("  ./task remove <id>               - remove tasks from the list\n");
     printf("  ./task list                      - print all the tasks from the list\n");
-    printf("  ./task list <statu>              - print all the tasks with the same statu\n");
-    printf("  ./task set_status <id> <statu>   - change the statu from a task\n");
+    printf("  ./task list <status>              - print all the tasks with the same statu\n");
+    printf("  ./task set-status <id> <statu>   - change the statu from a task\n");
     printf("  ./task rename <id> \"newTaskName\" - change the name from a task\n");
-    printf("  ./task clear <statu>              - delete every task with the same statu\n");
+    printf("  ./task clear <status>              - delete every task with the same statu\n");
     printf("  ./task reset                      - deletes every task\n\n");
     printf("Available status:\n");
-    printf("   TODO    -   are the tasks that added and havent executed yet\n");
-    printf("   DOING   -   are the tasks that we are doing\n");
-    printf("   DONE    -   are the tasks that have been completed\n");
+    printf("   todo    -   are the tasks that added and havent executed yet\n");
+    printf("   doing   -   are the tasks that we are doing\n");
+    printf("   done    -   are the tasks that have been completed\n");
 }
