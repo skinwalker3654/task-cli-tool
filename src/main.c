@@ -18,10 +18,10 @@ int main(int argc,char **argv) {
 
     load_tasks_from_file(&tasks);
 
-    /*These are all the commands with 1 arguments passing the 2nd is the ./fileName*/
+    /*These are all the commands with 1 argument passing the 2nd is the ./fileName*/
     if(argc == 2) {
         if(strcmp(argv[1],"list")==0) {
-            print_list_of_tasks(&tasks,EVERY_STATU);
+            print_list_of_tasks(&tasks,EVERY_STATUS);
             goto exit_label;
         } else if(strcmp(argv[1],"help")==0) {
             help_show_commands();

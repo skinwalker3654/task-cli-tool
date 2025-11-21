@@ -7,14 +7,14 @@ typedef enum {
     TODO,
     DOING,
     DONE, 
-    EVERY_STATU, /*This is used when we want to print all the list with every status
+    EVERY_STATUS, /*This is used when we want to print all the list with every status
                   *bc in the print_list_of_tasks function you say what status you want to print specifically*/
 } TaskStatus;
 
 typedef struct Task_t {
     uint32_t taskId;
     char *taskName;
-    TaskStatus TaskStatu;    
+    TaskStatus taskStatus;    
 } Task_t;
 
 typedef struct TaskList {
@@ -22,7 +22,6 @@ typedef struct TaskList {
     uint32_t capacity;
     uint32_t counter;
 } TaskList;
-
 
 /*UTIL FUNCTIONS*/
 void initialize_task_list(TaskList *listPtr);

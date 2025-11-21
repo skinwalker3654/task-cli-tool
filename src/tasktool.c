@@ -59,7 +59,7 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
 
     /*ID's are just numbers from 1 to INF so bc the task counter starts from zero we just add 1*/
     listPtr->tasks[listPtr->counter].taskId = listPtr->counter+1;
-    listPtr->tasks[listPtr->counter].TaskStatu = TODO; //Default task status
+    listPtr->tasks[listPtr->counter].taskStatus = TODO; //Default task status
     listPtr->counter++;
 
     /*Becauses we encresed the counter size before we now saying -1 to see the current task that added*/
@@ -122,7 +122,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
      * prints all the tasks*/
     if(givenStatu == TODO) {
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == TODO) {
+            if(listPtr->tasks[i].taskStatus == TODO) {
                 printf("%d | TODO | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
@@ -130,7 +130,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
         }
     } else if(givenStatu == DONE) {
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == DONE) {
+            if(listPtr->tasks[i].taskStatus == DONE) {
                 printf("%d | DONE | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
@@ -138,24 +138,24 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
         }
     } else if(givenStatu == DOING) {
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == DOING) {
+            if(listPtr->tasks[i].taskStatus == DOING) {
                 printf("%d | DOING | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
         }
-    } else if(givenStatu == EVERY_STATU) {
+    } else if(givenStatu == EVERY_STATUS) {
         for(int i=0; i<listPtr->counter; i++) {
             /*All this is in the same line
              * but bc the status are difrent
              * we had to check manualy*/
             printf("%d |",listPtr->tasks[i].taskId);
 
-            if(listPtr->tasks[i].TaskStatu == TODO) {
+            if(listPtr->tasks[i].taskStatus == TODO) {
                 printf(" TODO  |");
-            } else if(listPtr->tasks[i].TaskStatu == DONE) {
+            } else if(listPtr->tasks[i].taskStatus == DONE) {
                 printf(" DONE  |");
-            } else if(listPtr->tasks[i].TaskStatu == DOING) {
+            } else if(listPtr->tasks[i].taskStatus == DOING) {
                 printf(" DOING |");
             }
 
@@ -191,12 +191,12 @@ void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus given
     }
 
     /*We check if the task with the givenTaskId has already the givenStatu*/
-    if(listPtr->tasks[foundTaskIndex].TaskStatu == givenStatu) {
+    if(listPtr->tasks[foundTaskIndex].taskStatus == givenStatu) {
         printf("[ERR] Task with ID %d is already in the given status\n",givenTaskId);
         return;
     }
     
-    listPtr->tasks[foundTaskIndex].TaskStatu = givenStatu;
+    listPtr->tasks[foundTaskIndex].taskStatus = givenStatu;
     printf("[OK] Task '%s' has changed status succesfully\n",listPtr->tasks[foundTaskIndex].taskName);
 }
 
@@ -248,7 +248,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
      * the given status by using the sifting method*/
     if(givenStatu == DOING) { //DOING_STATU
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == DOING) {
+            if(listPtr->tasks[i].taskStatus == DOING) {
                 free(listPtr->tasks[i].taskName);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
@@ -259,7 +259,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
         }
     } else if(givenStatu == TODO) { //TODO_STATU
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == TODO) {
+            if(listPtr->tasks[i].taskStatus == TODO) {
                 free(listPtr->tasks[i].taskName);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
@@ -270,7 +270,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
         }
     } else if(givenStatu == DONE) { //DONE_STATU
         for(int i=0; i<listPtr->counter; i++) {
-            if(listPtr->tasks[i].TaskStatu == DONE) {
+            if(listPtr->tasks[i].taskStatus == DONE) {
                 free(listPtr->tasks[i].taskName);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
@@ -314,9 +314,9 @@ void save_tasks_to_file(TaskList *listPtr) {
     
     for(int i=0; i<listPtr->counter; i++) {
         fprintf(file,"%d|",listPtr->tasks[i].taskId);
-        if(listPtr->tasks[i].TaskStatu == TODO) fprintf(file,"1|");
-        else if(listPtr->tasks[i].TaskStatu == DOING) fprintf(file,"2|");
-        else if(listPtr->tasks[i].TaskStatu == DONE) fprintf(file,"3|");
+        if(listPtr->tasks[i].taskStatus == TODO) fprintf(file,"1|");
+        else if(listPtr->tasks[i].taskStatus == DOING) fprintf(file,"2|");
+        else if(listPtr->tasks[i].taskStatus == DONE) fprintf(file,"3|");
         fprintf(file,"%s|\n",listPtr->tasks[i].taskName); 
         /*We are using | at the end so we can parse the spaces too!*/
     }
@@ -361,11 +361,11 @@ void load_tasks_from_file(TaskList *listPtr) {
              * specifically, the values are explained in the save_tasks_to_file function*/
             listPtr->tasks[listPtr->counter].taskId = taskId;
             if(whatStatue == 1) {
-                listPtr->tasks[listPtr->counter].TaskStatu = TODO;
+                listPtr->tasks[listPtr->counter].taskStatus = TODO;
             } else if(whatStatue == 2) {
-                listPtr->tasks[listPtr->counter].TaskStatu = DOING;
+                listPtr->tasks[listPtr->counter].taskStatus = DOING;
             } else if(whatStatue == 3) {
-                listPtr->tasks[listPtr->counter].TaskStatu = DONE;
+                listPtr->tasks[listPtr->counter].taskStatus = DONE;
             }
 
             listPtr->counter++;
