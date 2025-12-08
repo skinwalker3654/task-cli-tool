@@ -7,8 +7,7 @@ typedef enum {
     TODO,
     DOING,
     DONE, 
-    EVERY_STATUS, /*This is used when we want to print all the list with every status
-                  *bc in the print_list_of_tasks function you say what status you want to print specifically*/
+    EVERY_STATUS,
 } TaskStatus;
 
 typedef struct Task_t {
