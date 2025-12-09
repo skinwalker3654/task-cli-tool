@@ -10,7 +10,6 @@ $(TARGER): $(HEADERS)
 
 clean:
 	@echo "deleting the executables ..."
-	rm -rf $(TARGER)
-	rm -rf $(DATAFILE)
+	rm -rf $(TARGER) $(DATAFILE)
 
 .PHONY: clean

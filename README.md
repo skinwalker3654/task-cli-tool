@@ -1,8 +1,8 @@
 # TASK_CLI_MANAGER (C)
 
-a cli tool that works with 
+A cli tool that works with 
 commands in terminals that you can use it
-to add delete change or complete your personal tasks
+to add delete change or complete your personal tasks.
 
 ---
 
@@ -42,6 +42,6 @@ make clean
 ```
 ---
 
-## 📌 Notes
+## Notes
 - The task manager uses vectors for dynamic growth
-- It auto saves and loads the tasks from file so the program can remember the tasks youv added
+- It auto saves and loads the tasks from a file so the program can remember the tasks youv added

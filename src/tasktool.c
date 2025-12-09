@@ -126,7 +126,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     if(givenStatus == TODO) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == TODO) {
-                printf(" %d | TODO   | %s\n"
+                printf(" %d |  TODO  | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
@@ -134,7 +134,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     } else if(givenStatus == DONE) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DONE) {
-                printf(" %d | DONE   | %s\n"
+                printf(" %d |  DONE  | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
@@ -142,7 +142,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     } else if(givenStatus == DOING) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DOING) {
-                printf(" %d | DOING  | %s\n"
+                printf(" %d |  DOING | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
@@ -155,11 +155,11 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
             printf(" %d |",listPtr->tasks[i].taskId);
 
             if(listPtr->tasks[i].taskStatus == TODO) {
-                printf(" TODO   |");
+                printf("  TODO  |");
             } else if(listPtr->tasks[i].taskStatus == DONE) {
-                printf(" DONE   |");
+                printf("  DONE  |");
             } else if(listPtr->tasks[i].taskStatus == DOING) {
-                printf(" DOING  |");
+                printf("  DOING |");
             }
 
             printf(" %s\n",listPtr->tasks[i].taskName);
