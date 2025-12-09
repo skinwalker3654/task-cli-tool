@@ -402,13 +402,13 @@ void free_task_list(TaskList *listPtr) {
 void help_show_commands() {
     /*This command prints a guid of how the program is used*/
     printf("Available commands:\n");
-    printf("  ./task add \"taskName\"            - add tasks to the list\n");
-    printf("  ./task remove <id>               - remove tasks from the list\n");
-    printf("  ./task list                      - print all the tasks from the list\n");
+    printf("  ./task add \"taskName\"             - add tasks to the list\n");
+    printf("  ./task remove <id>                - remove tasks from the list\n");
+    printf("  ./task list                       - print all the tasks from the list\n");
     printf("  ./task list <status>              - print all the tasks with the same status\n");
     printf("  ./task set-status <id> <status>   - change the status from a task\n");
-    printf("  ./task rename <id> \"newTaskName\" - change the name from a task\n");
-    printf("  ./task clear <status>              - delete every task with the same status\n");
+    printf("  ./task rename <id> \"newTaskName\"  - change the name from a task\n");
+    printf("  ./task clear <status>             - delete every task with the same status\n");
     printf("  ./task reset                      - deletes every task\n\n");
     printf("Available status:\n");
     printf("   todo    -   are the tasks that added and havent executed yet\n");
