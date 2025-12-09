@@ -110,53 +110,56 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
     free(deleted_task_name);
 }
 
-void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
+void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
         printf("[ERR] Task list is empty, there are no tasks to print yet\n");
         return;
     }
 
-    /* So this function gets a specific status and 
+    /* This function gets a specific status and 
      * then it prints every task with that status
-     * except in the case of the EVERY_STATU that
+     * except in the case of the EVERY_STATUS type that
      * prints all the tasks*/
-    if(givenStatu == TODO) {
+
+    printf("ID | STATUS | DESCRIPTION\n");
+    printf("-------------------------\n");
+    if(givenStatus == TODO) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == TODO) {
-                printf("%d | TODO | %s\n"
+                printf(" %d | TODO   | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
         }
-    } else if(givenStatu == DONE) {
+    } else if(givenStatus == DONE) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DONE) {
-                printf("%d | DONE | %s\n"
+                printf(" %d | DONE   | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
         }
-    } else if(givenStatu == DOING) {
+    } else if(givenStatus == DOING) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DOING) {
-                printf("%d | DOING | %s\n"
+                printf(" %d | DOING  | %s\n"
                         ,listPtr->tasks[i].taskId
                         ,listPtr->tasks[i].taskName);
             }
         }
-    } else if(givenStatu == EVERY_STATUS) {
+    } else if(givenStatus == EVERY_STATUS) {
         for(int i=0; i<listPtr->counter; i++) {
             /*All this is in the same line
              * but bc the status are difrent
              * we had to check manualy*/
-            printf("%d |",listPtr->tasks[i].taskId);
+            printf(" %d |",listPtr->tasks[i].taskId);
 
             if(listPtr->tasks[i].taskStatus == TODO) {
-                printf(" TODO  |");
+                printf(" TODO   |");
             } else if(listPtr->tasks[i].taskStatus == DONE) {
-                printf(" DONE  |");
+                printf(" DONE   |");
             } else if(listPtr->tasks[i].taskStatus == DOING) {
-                printf(" DOING |");
+                printf(" DOING  |");
             }
 
             printf(" %s\n",listPtr->tasks[i].taskName);
@@ -167,7 +170,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu) {
     }
 }
 
-void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatu) {
+void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
         printf("[ERR] The task list is empty, there are no tasks to change yet\n");
         return;
@@ -190,13 +193,13 @@ void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus given
         return;
     }
 
-    /*We check if the task with the givenTaskId has already the givenStatu*/
-    if(listPtr->tasks[foundTaskIndex].taskStatus == givenStatu) {
+    /*We check if the task with the givenTaskId has already the givenStatus*/
+    if(listPtr->tasks[foundTaskIndex].taskStatus == givenStatus) {
         printf("[ERR] Task with ID %d is already in the given status\n",givenTaskId);
         return;
     }
     
-    listPtr->tasks[foundTaskIndex].taskStatus = givenStatu;
+    listPtr->tasks[foundTaskIndex].taskStatus = givenStatus;
     printf("[OK] Task '%s' has changed status succesfully\n",listPtr->tasks[foundTaskIndex].taskName);
 }
 
@@ -243,10 +246,10 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
     free(task_before_rename);
 }
 
-void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
+void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
     /* This function clears every task with 
      * the given status by using the sifting method*/
-    if(givenStatu == DOING) { //DOING_STATU
+    if(givenStatus == DOING) { //DOING_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DOING) {
                 free(listPtr->tasks[i].taskName);
@@ -257,7 +260,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
                 for(int z=0; z<listPtr->counter; z++) listPtr->tasks[z].taskId = z+1;
             }
         }
-    } else if(givenStatu == TODO) { //TODO_STATU
+    } else if(givenStatus == TODO) { //TODO_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == TODO) {
                 free(listPtr->tasks[i].taskName);
@@ -268,7 +271,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu) {
                 for(int z=0; z<listPtr->counter; z++) listPtr->tasks[z].taskId = z+1;
             }
         }
-    } else if(givenStatu == DONE) { //DONE_STATU
+    } else if(givenStatus == DONE) { //DONE_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DONE) {
                 free(listPtr->tasks[i].taskName);
