@@ -411,7 +411,7 @@ void help_show_commands() {
     printf("  ./task clear <status>             - delete every task with the same status\n");
     printf("  ./task reset                      - deletes every task\n\n");
     printf("Available status:\n");
-    printf("   todo    -   are the tasks that added and havent executed yet\n");
-    printf("   doing   -   are the tasks that we are doing\n");
+    printf("   todo    -   are the tasks that added and havent done yet\n");
+    printf("   doing   -   are the tasks that you are doing\n");
     printf("   done    -   are the tasks that have been completed\n");
 }
