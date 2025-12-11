@@ -121,7 +121,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
      * except in the case of the EVERY_STATUS type that
      * prints all the tasks*/
 
-    printf("ID | STATUS | DESCRIPTION\n");
+    printf("\nID | STATUS | DESCRIPTION\n");
     printf("-------------------------\n");
     if(givenStatus == TODO) {
         for(int i=0; i<listPtr->counter; i++) {
@@ -131,6 +131,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
                         ,listPtr->tasks[i].taskName);
             }
         }
+        printf("\n");
     } else if(givenStatus == DONE) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DONE) {
@@ -139,6 +140,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
                         ,listPtr->tasks[i].taskName);
             }
         }
+        printf("\n");
     } else if(givenStatus == DOING) {
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DOING) {
@@ -147,6 +149,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
                         ,listPtr->tasks[i].taskName);
             }
         }
+        printf("\n");
     } else if(givenStatus == EVERY_STATUS) {
         for(int i=0; i<listPtr->counter; i++) {
             /*All this is in the same line
@@ -164,6 +167,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
 
             printf(" %s\n",listPtr->tasks[i].taskName);
         }
+        printf("\n");
     } else {
         printf("[ERR] You passed an invalid status format in the function \"print_list_of_tasks\"\n");
         return;
