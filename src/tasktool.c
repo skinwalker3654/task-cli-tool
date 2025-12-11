@@ -10,7 +10,7 @@ void initialize_task_list(TaskList *listPtr) {
     listPtr->capacity = 2;
     listPtr->tasks = malloc(sizeof(Task_t)*listPtr->capacity);
     if(listPtr->tasks == NULL) {
-        printf("[ERR] Task program initialization failed when started allocating memory for the task list\n");
+        printf("[ERR] Task program initialization failed when started allocating memory for the task list.\n");
         exit(EXIT_FAILURE);
         /* This runs in the start of the program so in case memory allocation fail
          * there is no other memory allocated before so we exit the program safely*/
@@ -26,13 +26,19 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
         listPtr->capacity *= 2;
         Task_t *tempList = realloc(listPtr->tasks,sizeof(Task_t)*listPtr->capacity);
         if(tempList == NULL) {
-            printf("[ERR] Failed to resize the task list with more memory for the new tasks\n");
+            printf("[ERR] Failed to resize the task list with more memory for the new tasks.\n");
             return;
         }
 
         /* We used temporary variable in case the reallocation failed
          * and now we add the values in the reall task list*/
         listPtr->tasks = tempList;
+    }
+
+    /*We check if the givenTaskName is empty*/
+    if(strlen(givenTaskName)==0) {
+        printf("[ERR] You cannot pass an empty task name as an argument.\n");
+        return;
     }
 
     /*Checking if the givenTaskName already exists in the list*/
@@ -45,7 +51,7 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
     }
 
     if(foundTaskWithSameName == 1) {
-        printf("[ERR] Task with name '%s' already exists in the list\n",givenTaskName);
+        printf("[ERR] Task with name '%s' already exists in the list.\n",givenTaskName);
         return;
     }
 
@@ -53,7 +59,7 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
      * so make sure in future changes to keep freeying the task names at the end of the program*/
     listPtr->tasks[listPtr->counter].taskName = strdup(givenTaskName);
     if(listPtr->tasks[listPtr->counter].taskName == NULL) {
-        printf("[ERR] Failed to allocate memory for the tasks name\n");
+        printf("[ERR] Failed to allocate memory for the tasks name.\n");
         return;
     }
 
@@ -63,12 +69,12 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
     listPtr->counter++;
 
     /*Becauses we encresed the counter size before we now saying -1 to see the current task that added*/
-    printf("[OK] task created succesfully with ID %d\n",listPtr->tasks[listPtr->counter-1].taskId);
+    printf("[OK] task created succesfully with ID %d.\n",listPtr->tasks[listPtr->counter-1].taskId);
 }
 
 void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
     if(listPtr->counter == 0) {
-        printf("[ERR] Task list is empty, there are no tasks to delete yet\n");
+        printf("[ERR] Task list is empty, there are no tasks to delete yet.\n");
         return;
     }
 
@@ -85,7 +91,7 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
      * with the given ID then the value will remain the same so we print
      * That the task does not exists*/
     if(foundTaskIndex == -1) {
-        printf("[ERR] Task with ID %d does not found in the list\n",givenTaskId);
+        printf("[ERR] Task with ID %d does not found in the list.\n",givenTaskId);
         return;
     }
 
@@ -93,7 +99,7 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
      * we are going to use it on the message at the end*/
     char *deleted_task_name = strdup(listPtr->tasks[foundTaskIndex].taskName);
     if(deleted_task_name == NULL) {
-        printf("[ERR] Failed to allocate memory for the task name before we delete it\n");
+        printf("[ERR] Failed to allocate memory for the task name before we delete it.\n");
         return;
     }
 
@@ -106,13 +112,13 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
 
     /*We add the ID's in the specific order*/
     for(int i=0; i<listPtr->counter; i++) listPtr->tasks[i].taskId = i+1;
-    printf("[OK] Task '%s' removed from the list succesfully\n",deleted_task_name);
+    printf("[OK] Task '%s' removed from the list succesfully.\n",deleted_task_name);
     free(deleted_task_name);
 }
 
 void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
-        printf("[ERR] Task list is empty, there are no tasks to print yet\n");
+        printf("[ERR] Task list is empty, there are no tasks to print yet.\n");
         return;
     }
 
@@ -169,14 +175,14 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
         }
         printf("\n");
     } else {
-        printf("[ERR] You passed an invalid status format in the function \"print_list_of_tasks\"\n");
+        printf("[ERR] You passed an invalid status format in the function \"print_list_of_tasks\".\n");
         return;
     }
 }
 
 void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
-        printf("[ERR] The task list is empty, there are no tasks to change yet\n");
+        printf("[ERR] The task list is empty, there are no tasks to change yet.\n");
         return;
     }
 
@@ -193,23 +199,23 @@ void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus given
      * so if we didnt find the task with the givenTaskId
      * then the variable will still be -1*/
     if(foundTaskIndex == -1) {
-        printf("[ERR] Task with ID %d not found in the list\n",givenTaskId);
+        printf("[ERR] Task with ID %d not found in the list.\n",givenTaskId);
         return;
     }
 
     /*We check if the task with the givenTaskId has already the givenStatus*/
     if(listPtr->tasks[foundTaskIndex].taskStatus == givenStatus) {
-        printf("[ERR] Task with ID %d is already in the given status\n",givenTaskId);
+        printf("[ERR] Task with ID %d is already in the given status.\n",givenTaskId);
         return;
     }
     
     listPtr->tasks[foundTaskIndex].taskStatus = givenStatus;
-    printf("[OK] Task '%s' has changed status succesfully\n",listPtr->tasks[foundTaskIndex].taskName);
+    printf("[OK] Task '%s' has changed status succesfully.\n",listPtr->tasks[foundTaskIndex].taskName);
 }
 
 void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName) {
     if(listPtr->counter == 0) {
-        printf("[ERR] Task list is empty, there are no tasks to rename yet\n");
+        printf("[ERR] Task list is empty, there are no tasks to rename yet.\n");
         return;
     }
 
@@ -225,13 +231,13 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
     /* The foundTaskIndex variable has by default the -1 value
      * so if the task havent found on the list nothing changed on the variable*/
     if(foundTaskIndex == -1) {
-        printf("[ERR] Task with ID %d not found in the list\n",givenTaskId);
+        printf("[ERR] Task with ID %d not found in the list.\n",givenTaskId);
         return;
     }
 
     /*We check if the task is already named to the givenTaskName*/
     if(strcmp(listPtr->tasks[foundTaskIndex].taskName,givenTaskName)==0) {
-        printf("[ERR] Task with ID %d is already named '%s'\n",givenTaskId,givenTaskName);
+        printf("[ERR] Task with ID %d is already named '%s'.\n",givenTaskId,givenTaskName);
         return;
     }
 
@@ -239,14 +245,14 @@ void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName
      * it on the message at the end*/
     char *task_before_rename = strdup(listPtr->tasks[foundTaskIndex].taskName);
     if(task_before_rename == NULL) {
-        printf("[ERR] Failed to allocate memory for the task name before we rename it\n");
+        printf("[ERR] Failed to allocate memory for the task name before we rename it.\n");
         return;
     }
 
     free(listPtr->tasks[foundTaskIndex].taskName);
     listPtr->tasks[foundTaskIndex].taskName = strdup(givenTaskName);
 
-    printf("[OK] Task '%s' has renamed to '%s' succesfully\n",task_before_rename,givenTaskName);
+    printf("[OK] Task '%s' has renamed to '%s' succesfully.\n",task_before_rename,givenTaskName);
     free(task_before_rename);
 }
 
@@ -288,12 +294,12 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
         }
     }
 
-    printf("[OK] Tasks with the given status have been cleared succesfully\n");
+    printf("[OK] Tasks with the given status have been cleared succesfully.\n");
 }
 
 void reset_task_list(TaskList *listPtr) {
     if(listPtr->counter == 0) {
-        printf("[ERR] List is already empty, it cannot be reseted\n");
+        printf("[ERR] List is already empty, it cannot be reseted.\n");
         return;
     }
 
@@ -303,7 +309,7 @@ void reset_task_list(TaskList *listPtr) {
     free(listPtr->tasks);
     initialize_task_list(listPtr);
 
-    printf("[OK] Task list has been reseted succesfully\n");
+    printf("[OK] Task list has been reseted succesfully.\n");
 }
 
 void save_tasks_to_file(TaskList *listPtr) {
@@ -315,7 +321,7 @@ void save_tasks_to_file(TaskList *listPtr) {
      * and 3 is for DONE_STATU*/
     FILE *file = fopen(".tasksdb","w");
     if(file == NULL) { 
-        printf("[ERR] Failed to save the tasks into the file\n");
+        printf("[ERR] Failed to save the tasks into the file.\n");
         return;
     }
     
@@ -334,7 +340,7 @@ void save_tasks_to_file(TaskList *listPtr) {
 void load_tasks_from_file(TaskList *listPtr) {
     FILE *file = fopen(".tasksdb","r");
     if(file == NULL) {
-        printf("[ERR] No data to load, make sure you have the .tasksdb file\n");
+        printf("[ERR] No data to load, make sure you have the .tasksdb file.\n");
         return;
     }
 
@@ -351,7 +357,7 @@ void load_tasks_from_file(TaskList *listPtr) {
                 listPtr->capacity *= 2;
                 Task_t *tempList = realloc(listPtr->tasks,sizeof(Task_t)*listPtr->capacity);
                 if(tempList == NULL) {
-                    printf("[ERR] Task program initialization failed when started allocating memory for the task list\n");
+                    printf("[ERR] Task program initialization failed when started allocating memory for the task list.\n");
                     return;
                 }
 
@@ -360,7 +366,7 @@ void load_tasks_from_file(TaskList *listPtr) {
 
             listPtr->tasks[listPtr->counter].taskName = strdup(taskName);
             if(listPtr->tasks[listPtr->counter].taskName == NULL) {
-                printf("[ERR] Failed to allocate memory for the task name\n");
+                printf("[ERR] Failed to allocate memory for the task name.\n");
                 return;
             }
 
@@ -408,7 +414,7 @@ void free_task_list(TaskList *listPtr) {
 
 void help_show_commands() {
     /*This command prints a guid of how the program is used*/
-    printf("Available commands:\n");
+    printf("\nAvailable commands:\n");
     printf("  ./task add \"taskName\"             - add tasks to the list\n");
     printf("  ./task remove <id>                - remove tasks from the list\n");
     printf("  ./task list                       - print all the tasks from the list\n");
@@ -420,5 +426,5 @@ void help_show_commands() {
     printf("Available status:\n");
     printf("   todo    -   are the tasks that added and havent done yet\n");
     printf("   doing   -   are the tasks that you are doing\n");
-    printf("   done    -   are the tasks that have been completed\n");
+    printf("   done    -   are the tasks that have been completed\n\n");
 }

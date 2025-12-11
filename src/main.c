@@ -7,8 +7,8 @@ int main(int argc,char **argv) {
     /* Thats because there are commands
      * with only 2, 3 or 4 arguments passed*/
     if(argc != 2 && argc != 3 && argc != 4) {
-        printf("[ERR] Invalid arguments passed\n");
-        printf("[INFO] Type: './task help' for more details\n");
+        printf("\n[ERR] Invalid arguments passed.\n");
+        printf("[INFO] Type: './task help' for more details.\n\n");
     }
 
     /* We create the structure and load the data
@@ -30,8 +30,8 @@ int main(int argc,char **argv) {
             reset_task_list(&tasks); 
             goto exit_label;
         } else {
-            printf("[ERR] Invalid command '%s %s'\n",argv[0],argv[1]);
-            printf("[INFO] Type: './task help' for more details\n");
+            printf("\n[ERR] Invalid command '%s %s'.\n",argv[0],argv[1]);
+            printf("[INFO] Type: './task help' for more details\n\n");
             goto exit_label;
         }
     }
@@ -49,8 +49,8 @@ int main(int argc,char **argv) {
                 print_list_of_tasks(&tasks,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid status '%s'\n",argv[2]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid status '%s'.\n",argv[2]);
+                printf("[INFO] Type: './task help' for more details.\n\n");
                 goto exit_label;
             }
         } else if(strcmp(argv[1],"add")==0) {
@@ -67,23 +67,23 @@ int main(int argc,char **argv) {
                 clear_tasks_by_status(&tasks,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid status '%s'\n",argv[2]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid task status '%s'.\n",argv[2]);
+                printf("[INFO] Type: './task help' for more details.\n\n");
             }
         } else if(strcmp(argv[1],"remove")==0) {
             char *endPtr;
             int idNumber = strtol(argv[2],&endPtr,10);
             if(*endPtr != '\0') {
-                printf("[ERR] Invalid ID '%s'\n",argv[2]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid task ID '%s'.\n",argv[2]);
+                printf("[INFO] Type: './task help' for more details.\n\n");
                 goto exit_label;
             }
 
             remove_task_from_list(&tasks,idNumber);
             goto exit_label;
         } else {
-            printf("[ERR] Invalid command '%s %s %s'\n",argv[0],argv[1],argv[2]);
-            printf("[INFO] Type: './task help' for more details\n");
+            printf("\n[ERR] Invalid command '%s %s %s'.\n",argv[0],argv[1],argv[2]);
+            printf("[INFO] Type: './task help' for more details.\n\n");
             goto exit_label;
         }
     }
@@ -94,8 +94,8 @@ int main(int argc,char **argv) {
             char *endPtr;
             int idNumber = strtol(argv[2],&endPtr,10);
             if(*endPtr != '\0') {
-                printf("[ERR] Invalid ID '%s'\n",argv[2]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid task ID '%s'.\n",argv[2]);
+                printf("[INFO] Type: './task help' for more details.\n\n");
                 goto exit_label;
             }
 
@@ -109,24 +109,24 @@ int main(int argc,char **argv) {
                 change_task_status_by_id(&tasks,idNumber,DOING);
                 goto exit_label;
             } else {
-                printf("[ERR] Invalid status '%s'\n",argv[3]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid task status '%s'.\n",argv[3]);
+                printf("[INFO] Type: './task help' for more details\n\n");
                 goto exit_label;
             }
         } else if(strcmp(argv[1],"rename")==0) {
             char *endPtr;
             int idNumber = strtol(argv[2],&endPtr,10);
             if(*endPtr != '\0') {
-                printf("[ERR] Invalid ID '%s'\n",argv[2]);
-                printf("[INFO] Type: './task help' for more details\n");
+                printf("\n[ERR] Invalid task ID '%s'.\n",argv[2]);
+                printf("[INFO] Type: './task help' for more details.\n\n");
                 goto exit_label;
             }
 
             rename_task_from_list(&tasks,idNumber,argv[3]);
             goto exit_label;
         } else {
-            printf("[ERR] Invalid command '%s %s %s %s'\n",argv[0],argv[1],argv[2],argv[3]);
-            printf("[INFO] Type: 'task help' for more details\n");
+            printf("\n[ERR] Invalid command '%s %s %s %s'.\n",argv[0],argv[1],argv[2],argv[3]);
+            printf("[INFO] Type: 'task help' for more details.\n\n");
             goto exit_label;
         }
     }    
