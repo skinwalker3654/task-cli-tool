@@ -33,9 +33,9 @@ void help_show_commands(void);
 /*MAIN FUNCTIONS*/
 void add_task_to_list(TaskList *listPtr,char *givenTaskName);
 void remove_task_from_list(TaskList *listPtr,int givenTaskId);
-void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatu);
-void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatu);
+void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus);
+void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus);
 void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName);
-void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatu);
+void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus);
 
 #endif
