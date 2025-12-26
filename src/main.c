@@ -100,13 +100,13 @@ int main(int argc,char **argv) {
             }
 
             if(strcmp(argv[3],"done")==0) {
-                change_task_status_by_id(&tasks,idNumber,DONE);
+                change_task_status(&tasks,idNumber,DONE);
                 goto exit_label;
             } else if(strcmp(argv[3],"todo")==0) {
-                change_task_status_by_id(&tasks,idNumber,TODO);
+                change_task_status(&tasks,idNumber,TODO);
                 goto exit_label;
             }  else if(strcmp(argv[3],"doing")==0) {
-                change_task_status_by_id(&tasks,idNumber,DOING);
+                change_task_status(&tasks,idNumber,DOING);
                 goto exit_label;
             } else {
                 printf("\n[ERR] Invalid task status '%s'.\n",argv[3]);

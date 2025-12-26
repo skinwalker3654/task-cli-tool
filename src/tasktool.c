@@ -180,7 +180,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
     }
 }
 
-void change_task_status_by_id(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus) {
+void change_task_status(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
         printf("[ERR] The task list is empty, there are no tasks to change yet.\n");
         return;
