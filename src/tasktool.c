@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdint.h>
 
-void initialize_task_list(TaskList *listPtr) {
+void initialize_tasks_list(TaskList *listPtr) {
     /* The SIZE of the capacity if by default 2 and its going to double every
      * time the tasks fill the size of the array (VECTOR)*/
     listPtr->capacity = 2;
@@ -213,7 +213,7 @@ void change_task_status(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus
     printf("[OK] Task '%s' has changed status succesfully.\n",listPtr->tasks[foundTaskIndex].taskName);
 }
 
-void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName) {
+void rename_task(TaskList *listPtr,int givenTaskId,char *givenTaskName) {
     if(listPtr->counter == 0) {
         printf("[ERR] Task list is empty, there are no tasks to rename yet.\n");
         return;
@@ -297,17 +297,39 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
     printf("[OK] Tasks with the given status have been cleared succesfully.\n");
 }
 
-void reset_task_list(TaskList *listPtr) {
+void free_tasks_list(TaskList *listPtr) {
+    /* If the list dosent have any task that mean
+     * that there are no task names to free so we only 
+     * free the listPtr->tasks that the initialize_task_list 
+     * function allacated*/
+    if(listPtr->counter == 0) {
+        free(listPtr->tasks);
+        listPtr->counter = 0;
+        listPtr->capacity = 0;
+        listPtr->tasks = NULL;
+        return;
+    }
+
+    /* Otherwise we first free all the names
+     * and then we free the listPtr->tasks*/
+    for(int i=0; i<listPtr->counter; i++)
+        free(listPtr->tasks[i].taskName);
+
+    free(listPtr->tasks);
+    listPtr->counter = 0;
+    listPtr->capacity = 0;
+    listPtr->tasks = NULL;
+}
+
+
+void reset_tasks_list(TaskList *listPtr) {
     if(listPtr->counter == 0) {
         printf("[ERR] List is already empty, it cannot be reseted.\n");
         return;
     }
 
-    for(int i=0; i<listPtr->counter; i++)
-        free(listPtr->tasks[i].taskName);
-
-    free(listPtr->tasks);
-    initialize_task_list(listPtr);
+    free_tasks_list(listPtr);
+    initialize_tasks_list(listPtr);
 
     printf("[OK] Task list has been reseted succesfully.\n");
 }
@@ -386,30 +408,6 @@ void load_tasks_from_file(TaskList *listPtr) {
     }
 
     fclose(file);
-}
-
-void free_task_list(TaskList *listPtr) {
-    /* If the list dosent have any task that mean
-     * that there are no task names to free so we only 
-     * free the listPtr->tasks that the initialize_task_list 
-     * function allacated*/
-    if(listPtr->counter == 0) {
-        free(listPtr->tasks);
-        listPtr->counter = 0;
-        listPtr->capacity = 0;
-        listPtr->tasks = NULL;
-        return;
-    }
-
-    /* Otherwise we first free all the names
-     * and then we free the listPtr->tasks*/
-    for(int i=0; i<listPtr->counter; i++)
-        free(listPtr->tasks[i].taskName);
-
-    free(listPtr->tasks);
-    listPtr->counter = 0;
-    listPtr->capacity = 0;
-    listPtr->tasks = NULL;
 }
 
 void help_show_commands() {

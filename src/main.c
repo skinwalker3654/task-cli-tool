@@ -14,7 +14,7 @@ int main(int argc,char **argv) {
     /* We create the structure and load the data
      * from the file*/
     TaskList tasks;
-    initialize_task_list(&tasks);
+    initialize_tasks_list(&tasks);
 
     load_tasks_from_file(&tasks);
 
@@ -27,7 +27,7 @@ int main(int argc,char **argv) {
             help_show_commands();
             goto exit_label;
         } else if(strcmp(argv[1],"reset")==0) {
-            reset_task_list(&tasks); 
+            reset_tasks_list(&tasks); 
             goto exit_label;
         } else {
             printf("\n[ERR] Invalid command '%s %s'.\n",argv[0],argv[1]);
@@ -122,7 +122,7 @@ int main(int argc,char **argv) {
                 goto exit_label;
             }
 
-            rename_task_from_list(&tasks,idNumber,argv[3]);
+            rename_task(&tasks,idNumber,argv[3]);
             goto exit_label;
         } else {
             printf("\n[ERR] Invalid command '%s %s %s %s'.\n",argv[0],argv[1],argv[2],argv[3]);
@@ -133,7 +133,7 @@ int main(int argc,char **argv) {
 
     exit_label:
         save_tasks_to_file(&tasks); 
-        free_task_list(&tasks);
+        free_tasks_list(&tasks);
 
     return 0;
 }

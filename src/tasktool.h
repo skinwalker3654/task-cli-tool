@@ -23,11 +23,11 @@ typedef struct TaskList {
 } TaskList;
 
 /*UTIL FUNCTIONS*/
-void initialize_task_list(TaskList *listPtr);
+void initialize_tasks_list(TaskList *listPtr);
 void save_tasks_to_file(TaskList *listPtr);
 void load_tasks_from_file(TaskList *listPtr);
-void free_task_list(TaskList *listPtr);
-void reset_task_list(TaskList *listPtr);
+void free_tasks_list(TaskList *listPtr);
+void reset_tasks_list(TaskList *listPtr);
 void help_show_commands(void);
 
 /*MAIN FUNCTIONS*/
@@ -35,7 +35,7 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName);
 void remove_task_from_list(TaskList *listPtr,int givenTaskId);
 void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus);
 void change_task_status(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus);
-void rename_task_from_list(TaskList *listPtr,int givenTaskId,char *givenTaskName);
+void rename_task(TaskList *listPtr,int givenTaskId,char *givenTaskName);
 void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus);
 
 #endif
