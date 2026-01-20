@@ -19,7 +19,7 @@ void initialize_tasks_list(TaskList *listPtr) {
     listPtr->counter = 0;
 }
 
-void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
+void add_task_to_list(TaskList *listPtr,char *givenTaskTitle) {
     if(listPtr->counter >= listPtr->capacity) {
         /* We double the capacity when the tasks filled the current 
          * Task_t array size*/
@@ -35,31 +35,31 @@ void add_task_to_list(TaskList *listPtr,char *givenTaskName) {
         listPtr->tasks = tempList;
     }
 
-    /*We check if the givenTaskName is empty*/
-    if(strlen(givenTaskName)==0) {
+    /*We check if the givenTaskTitle is empty*/
+    if(strlen(givenTaskTitle)==0) {
         printf("[ERR] You cannot pass an empty task name as an argument.\n");
         return;
     }
 
-    /*Checking if the givenTaskName already exists in the list*/
-    int foundTaskWithSameName = -1;
+    /*Checking if the givenTaskTitle already exists in the list*/
+    int foundTaskWithSameTitle = -1;
     for(int i=0; i<listPtr->counter; i++) {
-        if(strcmp(listPtr->tasks[i].taskName,givenTaskName)==0) {
-            foundTaskWithSameName = 1;
+        if(strcmp(listPtr->tasks[i].taskTitle,givenTaskTitle)==0) {
+            foundTaskWithSameTitle = 1;
             break;
         }
     }
 
-    if(foundTaskWithSameName == 1) {
-        printf("[ERR] Task with name '%s' already exists in the list.\n",givenTaskName);
+    if(foundTaskWithSameTitle == 1) {
+        printf("[ERR] Task with title '%s' already exists in the list.\n",givenTaskTitle);
         return;
     }
 
     /* STRDUP function allocates memory exactly for the size of the string 
-     * so make sure in future changes to keep freeying the task names at the end of the program*/
-    listPtr->tasks[listPtr->counter].taskName = strdup(givenTaskName);
-    if(listPtr->tasks[listPtr->counter].taskName == NULL) {
-        printf("[ERR] Failed to allocate memory for the tasks name.\n");
+     * so make sure in future changes to keep freeying the task titles at the end of the program*/
+    listPtr->tasks[listPtr->counter].taskTitle = strdup(givenTaskTitle);
+    if(listPtr->tasks[listPtr->counter].taskTitle == NULL) {
+        printf("[ERR] Failed to allocate memory for the tasks title.\n");
         return;
     }
 
@@ -95,15 +95,15 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
         return;
     }
 
-    /* We keep the name of the task we are going to delete bc
+    /* We keep the title of the task we are going to delete bc
      * we are going to use it on the message at the end*/
-    char *deleted_task_name = strdup(listPtr->tasks[foundTaskIndex].taskName);
-    if(deleted_task_name == NULL) {
-        printf("[ERR] Failed to allocate memory for the task name before we delete it.\n");
+    char *deleted_task_title = strdup(listPtr->tasks[foundTaskIndex].taskTitle);
+    if(deleted_task_title == NULL) {
+        printf("[ERR] Failed to allocate memory for the task title before we delete it.\n");
         return;
     }
 
-    free(listPtr->tasks[foundTaskIndex].taskName);
+    free(listPtr->tasks[foundTaskIndex].taskTitle);
 
     /*Shifting method for deletion*/
     for(int i=foundTaskIndex; i<listPtr->counter-1; i++) 
@@ -112,8 +112,8 @@ void remove_task_from_list(TaskList *listPtr,int givenTaskId) {
 
     /*We add the ID's in the specific order*/
     for(int i=0; i<listPtr->counter; i++) listPtr->tasks[i].taskId = i+1;
-    printf("[OK] Task '%s' removed from the list succesfully.\n",deleted_task_name);
-    free(deleted_task_name);
+    printf("[OK] Task '%s' removed from the list succesfully.\n",deleted_task_title);
+    free(deleted_task_title);
 }
 
 void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
@@ -134,7 +134,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
             if(listPtr->tasks[i].taskStatus == TODO) {
                 printf(" %d |  TODO  | %s\n"
                         ,listPtr->tasks[i].taskId
-                        ,listPtr->tasks[i].taskName);
+                        ,listPtr->tasks[i].taskTitle);
             }
         }
         printf("\n");
@@ -143,7 +143,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
             if(listPtr->tasks[i].taskStatus == DONE) {
                 printf(" %d |  DONE  | %s\n"
                         ,listPtr->tasks[i].taskId
-                        ,listPtr->tasks[i].taskName);
+                        ,listPtr->tasks[i].taskTitle);
             }
         }
         printf("\n");
@@ -152,7 +152,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
             if(listPtr->tasks[i].taskStatus == DOING) {
                 printf(" %d |  DOING | %s\n"
                         ,listPtr->tasks[i].taskId
-                        ,listPtr->tasks[i].taskName);
+                        ,listPtr->tasks[i].taskTitle);
             }
         }
         printf("\n");
@@ -171,7 +171,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
                 printf("  DOING |");
             }
 
-            printf(" %s\n",listPtr->tasks[i].taskName);
+            printf(" %s\n",listPtr->tasks[i].taskTitle);
         }
         printf("\n");
     } else {
@@ -182,7 +182,7 @@ void print_list_of_tasks(TaskList *listPtr,TaskStatus givenStatus) {
 
 void change_task_status(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus) {
     if(listPtr->counter == 0) {
-        printf("[ERR] The task list is empty, there are no tasks to change yet.\n");
+        printf("[ERR] The task list is empty, there are no tasks to change there status yet.\n");
         return;
     }
 
@@ -210,10 +210,10 @@ void change_task_status(TaskList *listPtr,int givenTaskId,TaskStatus givenStatus
     }
     
     listPtr->tasks[foundTaskIndex].taskStatus = givenStatus;
-    printf("[OK] Task '%s' has changed status succesfully.\n",listPtr->tasks[foundTaskIndex].taskName);
+    printf("[OK] Task '%s' has changed status succesfully.\n",listPtr->tasks[foundTaskIndex].taskTitle);
 }
 
-void rename_task(TaskList *listPtr,int givenTaskId,char *givenTaskName) {
+void rename_task(TaskList *listPtr,int givenTaskId,char *givenTaskTitle) {
     if(listPtr->counter == 0) {
         printf("[ERR] Task list is empty, there are no tasks to rename yet.\n");
         return;
@@ -235,24 +235,24 @@ void rename_task(TaskList *listPtr,int givenTaskId,char *givenTaskName) {
         return;
     }
 
-    /*We check if the task is already named to the givenTaskName*/
-    if(strcmp(listPtr->tasks[foundTaskIndex].taskName,givenTaskName)==0) {
-        printf("[ERR] Task with ID %d is already named '%s'.\n",givenTaskId,givenTaskName);
+    /*We check if the task is already titled the same as the givenTaskTitle*/
+    if(strcmp(listPtr->tasks[foundTaskIndex].taskTitle,givenTaskTitle)==0) {
+        printf("[ERR] Task with ID %d is already named '%s'.\n",givenTaskId,givenTaskTitle);
         return;
     }
 
     /* We keep the name of the task before the renaming so we can use
      * it on the message at the end*/
-    char *task_before_rename = strdup(listPtr->tasks[foundTaskIndex].taskName);
+    char *task_before_rename = strdup(listPtr->tasks[foundTaskIndex].taskTitle);
     if(task_before_rename == NULL) {
-        printf("[ERR] Failed to allocate memory for the task name before we rename it.\n");
+        printf("[ERR] Failed to allocate memory for the task title before we rename it.\n");
         return;
     }
 
-    free(listPtr->tasks[foundTaskIndex].taskName);
-    listPtr->tasks[foundTaskIndex].taskName = strdup(givenTaskName);
+    free(listPtr->tasks[foundTaskIndex].taskTitle);
+    listPtr->tasks[foundTaskIndex].taskTitle = strdup(givenTaskTitle);
 
-    printf("[OK] Task '%s' has renamed to '%s' succesfully.\n",task_before_rename,givenTaskName);
+    printf("[OK] Task '%s' has renamed to '%s' succesfully.\n",task_before_rename,givenTaskTitle);
     free(task_before_rename);
 }
 
@@ -262,7 +262,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
     if(givenStatus == DOING) { //DOING_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DOING) {
-                free(listPtr->tasks[i].taskName);
+                free(listPtr->tasks[i].taskTitle);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
                 listPtr->counter--;
@@ -273,7 +273,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
     } else if(givenStatus == TODO) { //TODO_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == TODO) {
-                free(listPtr->tasks[i].taskName);
+                free(listPtr->tasks[i].taskTitle);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
                 listPtr->counter--;
@@ -284,7 +284,7 @@ void clear_tasks_by_status(TaskList *listPtr,TaskStatus givenStatus) {
     } else if(givenStatus == DONE) { //DONE_STATU
         for(int i=0; i<listPtr->counter; i++) {
             if(listPtr->tasks[i].taskStatus == DONE) {
-                free(listPtr->tasks[i].taskName);
+                free(listPtr->tasks[i].taskTitle);
                 for(int j=i; j<listPtr->counter-1; j++) 
                     listPtr->tasks[j] = listPtr->tasks[j+1];
                 listPtr->counter--;
@@ -310,10 +310,10 @@ void free_tasks_list(TaskList *listPtr) {
         return;
     }
 
-    /* Otherwise we first free all the names
+    /* Otherwise we first free all the titles
      * and then we free the listPtr->tasks*/
     for(int i=0; i<listPtr->counter; i++)
-        free(listPtr->tasks[i].taskName);
+        free(listPtr->tasks[i].taskTitle);
 
     free(listPtr->tasks);
     listPtr->counter = 0;
@@ -336,11 +336,11 @@ void reset_tasks_list(TaskList *listPtr) {
 
 void save_tasks_to_file(TaskList *listPtr) {
     /* We save the tasks into a file with the name .tasksdb
-     * with the format id|status|task name so we can load the data
+     * with the format id|status|title so we can load the data
      * every time we run the program so it nevers losts any tasks
      * except if you delete the file, NOTE in the status we are using numbers
-     * for the parsing to make the job esier so 1 = TODO_STAT, 2 = DOING_STATU
-     * and 3 is for DONE_STATU*/
+     * for the parsing to make the job esier so 1 = TODO_STATUS, 2 = DOING_STATUS
+     * and 3 is for DONE_STATUS*/
     FILE *file = fopen(".tasksdb","w");
     if(file == NULL) { 
         printf("[ERR] Failed to save the tasks into the file.\n");
@@ -352,7 +352,7 @@ void save_tasks_to_file(TaskList *listPtr) {
         if(listPtr->tasks[i].taskStatus == TODO) fprintf(file,"1|");
         else if(listPtr->tasks[i].taskStatus == DOING) fprintf(file,"2|");
         else if(listPtr->tasks[i].taskStatus == DONE) fprintf(file,"3|");
-        fprintf(file,"%s|\n",listPtr->tasks[i].taskName); 
+        fprintf(file,"%s|\n",listPtr->tasks[i].taskTitle); 
         /*We are using | at the end so we can parse the spaces too!*/
     }
 
@@ -370,10 +370,10 @@ void load_tasks_from_file(TaskList *listPtr) {
 
     int taskId;
     int whatStatue;
-    char taskName[256];
+    char taskTitle[256];
 
     while(fgets(buffer,sizeof(buffer),file)) {
-        if(sscanf(buffer,"%d|%d|%[^|]|",&taskId,&whatStatue,taskName)==3) {
+        if(sscanf(buffer,"%d|%d|%[^|]|",&taskId,&whatStatue,taskTitle)==3) {
             if(listPtr->counter >= listPtr->capacity) {
                 /*If the array of tasks is filled then we double the size of it (VECTOR)*/
                 listPtr->capacity *= 2;
@@ -386,9 +386,9 @@ void load_tasks_from_file(TaskList *listPtr) {
                 listPtr->tasks = tempList;
             }
 
-            listPtr->tasks[listPtr->counter].taskName = strdup(taskName);
-            if(listPtr->tasks[listPtr->counter].taskName == NULL) {
-                printf("[ERR] Failed to allocate memory for the task name.\n");
+            listPtr->tasks[listPtr->counter].taskTitle = strdup(taskTitle);
+            if(listPtr->tasks[listPtr->counter].taskTitle == NULL) {
+                printf("[ERR] Failed to allocate memory for the task title.\n");
                 return;
             }
 

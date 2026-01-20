@@ -12,7 +12,7 @@ typedef enum {
 
 typedef struct Task_t {
     uint32_t taskId;
-    char *taskName;
+    char *taskTitle;
     TaskStatus taskStatus;    
 } Task_t;
 
